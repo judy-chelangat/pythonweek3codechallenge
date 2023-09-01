@@ -31,7 +31,7 @@ class Restuarant(Base):
 #customer table
 class Customer(Base):
       __tablename__='customers'
-      customer_id=Column(Integer,Sequence('customer_id_seq'),primary_key=True)
+      customer_id=Column(Integer,Sequence('customers_id_seq'),primary_key=True)
       first_name=Column(String)
       last_name=Column(String)
 
@@ -58,5 +58,5 @@ class Review(Base):
        def __repr__(self):
             return f"Review {self.review_id}: " \
                 + f"Customer ID: {self.customer_id}, " \
-                + f"Restaurant ID: {self.restaurant_id}, " \
+                + f"Restuarant ID: {self.restuarant_id}, " \
                 + f"Rating: {self.star_rating}"
