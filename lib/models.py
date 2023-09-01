@@ -22,6 +22,12 @@ class Restuarant(Base):
     #relationship
     reviews =relationship('Review',back_populates='restuarant')
     
+    #methods to get the restuarant reviews and customers for a restuarant 
+    def get_reviews(self):
+         return self.reviews
+    
+    def get_customers(self):
+         return [review.customer for review in self.reviews] #returning a specific customer from a review
 
     def __repr__(self):
         return f"Restuarant {self.restuarant_id}: " \
@@ -37,6 +43,14 @@ class Customer(Base):
 
       #relationship
       reviews =relationship('Review',back_populates='customer')
+
+# methods  to retrieve the customer reviews and customers
+      def customer_reviews(self):
+           return self.reviews
+      
+      def customer_restuarants(self):
+           return [review.restuarant for review in self.reviews]
+      
 
       def __repr__(self):
         return f"Customer {self.customer_id}: " \
