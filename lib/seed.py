@@ -18,7 +18,7 @@ if __name__ == '__main__':
     session.query(Review).delete()
 
 #to check if its working 
-print("Seeding restuarants...")
+#print("Seeding restuarants...")
 restuarants = [
     Restuarant(
         name=fake.name(),
@@ -27,7 +27,7 @@ restuarants = [
 for i in range(10)] #creating 10 records 
 
 #adding records for the customers 
-print("seeding customers")
+#print("seeding customers")
 customers =[
     Customer(
         first_name=fake.name(),
@@ -42,7 +42,7 @@ session.add_all(customers)
 session.commit()
 
 #adding records for the reviews
-print('seeding reviews')
+#print('seeding reviews')
 reviews = [
         Review(
               customer=random.choice(customers),  # Using  the actual Customer object
@@ -67,10 +67,23 @@ restaurant_instance = review1.get_restuarant()
 print (customer_instance)
 print(restaurant_instance)
 
-#2
+#2 getting the reviews for  a restuarant 
+restaurant1 = session.query(Restuarant).first()  # Retrieving  a restaurant
 
+restaurant_reviews= restaurant1.get_reviews()   #using the method 
+restuarant_customers = restaurant1.get_customers()
 
+print(restaurant_reviews)
+print(restuarant_customers)
 
+#3 getting the customer reviews and customer restuarants (the ones one has reviewed)
+customer1 = session.query(Customer).first()  # Retrieve a customer
+
+reviews_collection = customer1.customer_reviews()
+restaurants_collection = customer1.customer_restuarants()
+
+print(restaurants_collection)
+print(reviews_collection)
 
 #closing the session
 session.close()
