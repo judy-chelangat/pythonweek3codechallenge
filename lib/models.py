@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column,String,ForeignKey,Integer,Sequence
 
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 # define the database connection 
 DATABASE_URI = 'sqlite:///restuarants.db' #path to the database
@@ -18,9 +19,11 @@ class Restuarant(Base):
     restuarant_id=Column(Integer ,Sequence('resturant_id_seq'), primary_key=True)
     name =Column(String)
     price =Column(Integer)
+    #relationship
+    reviews =relationship('Review',back_populates='restuarant')
+    
 
-
-def __repr__(self):
+    def __repr__(self):
         return f"Restuarant {self.restuarant_id}: " \
             + f"{self.name}, " \
             + f"Price {self.price}"
@@ -32,8 +35,28 @@ class Customer(Base):
       first_name=Column(String)
       last_name=Column(String)
 
+      #relationship
+      reviews =relationship('Review',back_populates='customer')
 
-def __repr__(self):
+      def __repr__(self):
         return f"Customer {self.customer_id}: " \
             + f"{self.first_name}, " \
             + f"lastname {self.last_name}"
+
+#reviews table 
+class Review(Base):
+       __tablename__='reviews'
+       review_id=Column(Integer,Sequence('review_id_seq'),primary_key=True)
+       customer_id =Column(Integer,ForeignKey('customers.customer_id')) # primary key for customer table
+       restuarant_id =Column(Integer,ForeignKey('restuarants.restuarant_id'))
+       star_rating=Column(Integer)
+
+#establishing the relationships
+       customer = relationship('Customer',back_populates='reviews')
+       restuarant = relationship('Restuarant', back_populates='reviews')
+
+       def __repr__(self):
+            return f"Review {self.review_id}: " \
+                + f"Customer ID: {self.customer_id}, " \
+                + f"Restaurant ID: {self.restaurant_id}, " \
+                + f"Rating: {self.star_rating}"
