@@ -55,6 +55,15 @@ class Review(Base):
        customer = relationship('Customer',back_populates='reviews')
        restuarant = relationship('Restuarant', back_populates='reviews')
 
+#class methods for retrieving data
+       def get_customer(self):
+            return self.customer # returns the customer instance 
+       
+
+       def get_restuarant(self):
+            return self.restuarant # returns the restuarant instance
+       
+       
        def __repr__(self):
             return f"Review {self.review_id}: " \
                 + f"Customer ID: {self.customer_id}, " \
