@@ -85,5 +85,12 @@ restaurants_collection = customer1.customer_restuarants()
 print(restaurants_collection)
 print(reviews_collection)
 
+#4 printing the customer full name 
+customer = session.query(Customer).first()  # Retrieve a customer
+full_name = customer.full_name()
+print(full_name)
+
+#5 
+
 #closing the session
 session.close()
