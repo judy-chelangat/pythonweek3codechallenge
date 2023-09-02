@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship,sessionmaker
 # define the database connection 
 DATABASE_URI = 'sqlite:///restuarants.db' #path to the database
 
-engine = create_engine(DATABASE_URI,echo=True)
+engine = create_engine(DATABASE_URI,echo=False)
  #creating the engine
 Session = sessionmaker(bind=engine) #creating a session
 session = Session()
@@ -30,6 +30,23 @@ class Restuarant(Base):
     def get_customers(self):
          return [review.customer for review in self.reviews] #returning a specific customer from a review
 
+    @classmethod
+    def fanciest(cls): # returns the restuarant instance for the one with the highest price 
+     fancy_restuarant= session.query(cls).order_by(cls.price.desc()).first()
+     return fancy_restuarant
+    
+    #list of all reviews for this restuarant 
+    def all_reviews(self):
+         list_of_reviews=[]
+         for review in self.reviews:
+              restuarant_name=self.name
+              customer_name=f"{review.customer.first_name} {review.customer.last_name}"
+              star_rating= review.star_rating
+              one_review= f"Review for {restuarant_name} by {customer_name}: {star_rating} stars."
+              list_of_reviews.append(one_review)
+
+         return list_of_reviews
+    
     def __repr__(self):
         return f"Restuarant {self.restuarant_id}: " \
             + f"{self.name}, " \
@@ -59,11 +76,12 @@ class Customer(Base):
       #customer's favourite restuarant
       def favourite_restuarant(self):
            high_rating=0 
+           favorite_restaurant_name = None
            for review in self.reviews: #looping through the reviews 
                 if review.star_rating > high_rating:
                      high_rating=review.star_rating
-                     
-           return review.restuarant.name
+           favorite_restaurant_name = review.restuarant.name
+           return favorite_restaurant_name
  
       #add review for a restuarant
      #  def add_review(self,restuarant_name,rating):
