@@ -19,9 +19,22 @@ if __name__ == '__main__':
 
 #to check if its working 
 #print("Seeding restuarants...")
+#data for the restuarants
+restaurant_names = [
+    "Nairobi Grill House",
+    "Safari Bites",
+    "Savannah Spice",
+    "Simba Steakhouse",
+    "Maasai Kitchen",
+    "Kilimanjaro Delights",
+    "Jambo Cafe",
+    "African Fusion",
+    "Nairobi Noodle House",
+    "Savanna Sizzle",
+]
 restuarants = [
     Restuarant(
-        name=fake.name(),
+        name=random.choice(restaurant_names),
         price=random.randint(0, 60)
     )
 for i in range(10)] #creating 10 records 
@@ -30,8 +43,8 @@ for i in range(10)] #creating 10 records
 #print("seeding customers")
 customers =[
     Customer(
-        first_name=fake.name(),
-        last_name=fake.name()
+        first_name=fake.first_name(),
+        last_name=fake.last_name()
     )
     for j in range(10)
 ]
@@ -64,15 +77,17 @@ review1 = session.query(Review).first()
 customer_instance = review1.get_customer()
 restaurant_instance = review1.get_restuarant()
 
+print("------------------customer and restuarant instance-----------------------")
 print (customer_instance)
 print(restaurant_instance)
 
 #2 getting the reviews for  a restuarant 
 restaurant1 = session.query(Restuarant).first()  # Retrieving  a restaurant
 
-restaurant_reviews= restaurant1.get_reviews()   #using the method 
-restuarant_customers = restaurant1.get_customers()
+restaurant_reviews= restaurant1.get_reviews()   #using the method to get the reviews for a restuarant
+restuarant_customers = restaurant1.get_customers() #getting the customers who have reviewed a particular restuarant
 
+print("------------------reviews and customers of a particular restuarant-----------------------")
 print(restaurant_reviews)
 print(restuarant_customers)
 
@@ -82,15 +97,20 @@ customer1 = session.query(Customer).first()  # Retrieve a customer
 reviews_collection = customer1.customer_reviews()
 restaurants_collection = customer1.customer_restuarants()
 
+print("------------------customer and restuarant reviews -----------------------")
 print(restaurants_collection)
 print(reviews_collection)
 
 #4 printing the customer full name 
 customer = session.query(Customer).first()  # Retrieve a customer
 full_name = customer.full_name()
+
+print("------------------customer's full name---------------- ")
 print(full_name)
 
-#5 
+#5 getting the customers favourite restuarant
+print("-------------------customer's favourite restuarant-------------")
+print(customer1.favourite_restuarant())
 
 #closing the session
 session.close()
