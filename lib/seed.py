@@ -112,5 +112,21 @@ print(full_name)
 print("-------------------customer's favourite restuarant-------------")
 print(customer1.favourite_restuarant())
 
+# # 6 adding a review of a restuarant
+# customer2 = session.query(Customer) 
+# restaurant2 = session.query(Restuarant)  
+# rating=5 #setting the rating 
+# new_review=Customer.add_review(restaurant2,rating)
+
+# print("---------------------added review---------------")
+# print(new_review)
+
+#7 deleting reviews
+#8 full review 
+review2 = session.query(Review).first()  # Replace with the desired review
+full_review = review2.full_review()
+
+print("------------------full review-----------")
+print(full_review)
 #closing the session
 session.close()
