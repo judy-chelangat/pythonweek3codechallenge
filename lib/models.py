@@ -54,6 +54,16 @@ class Customer(Base):
       #customer full name
       def full_name(self):
         return f"{self.first_name} {self.last_name}"
+      
+      #customer's favourite restuarant
+      def favourite_restuarant(self):
+           high_rating=0 
+           for review in self.reviews: #looping through the reviews 
+                if review.star_rating > high_rating:
+                     high_rating=review.star_rating
+                     
+           return review.restuarant.name
+
 
       def __repr__(self):
         return f"Customer {self.customer_id}: " \
