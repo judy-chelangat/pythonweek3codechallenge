@@ -10,7 +10,7 @@ fake = Faker()
 
 if __name__ == '__main__':
     
-    engine = create_engine('sqlite:///restuarants.db') #establishing the connection
+    engine = create_engine('sqlite:///restuarants.db'       ) #establishing the connection
     Session = sessionmaker(bind=engine) #creating a session
     session = Session()
     session.query(Restuarant).delete() #to delete the previous records to avoid duplication
@@ -133,5 +133,13 @@ print(full_review)
 fanciest_restuarant=Restuarant.fanciest()
 print("-------------------fanciest restuarant-------------")
 print(fanciest_restuarant)
+
+#10list of all the reviews
+restuarant_reviews= session.query(Restuarant).first()
+reviews_list=restuarant_reviews.all_reviews()
+
+print("-------------all reviews----------")
+for one_review in reviews_list:
+    print(one_review)
 #closing the session
 session.close()
