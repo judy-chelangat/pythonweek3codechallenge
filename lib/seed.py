@@ -128,5 +128,10 @@ full_review = review2.full_review()
 
 print("------------------full review-----------")
 print(full_review)
+
+#9 restuarant with the highest price
+fanciest_restuarant=Restuarant.fanciest()
+print("-------------------fanciest restuarant-------------")
+print(fanciest_restuarant)
 #closing the session
 session.close()
