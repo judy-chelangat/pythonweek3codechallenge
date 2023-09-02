@@ -2,14 +2,15 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column,String,ForeignKey,Integer,Sequence
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship,sessionmaker
 
 # define the database connection 
 DATABASE_URI = 'sqlite:///restuarants.db' #path to the database
 
 engine = create_engine(DATABASE_URI,echo=True)
  #creating the engine
-
+Session = sessionmaker(bind=engine) #creating a session
+session = Session()
 #base class for allthe classes
 Base =declarative_base()
 
@@ -63,8 +64,27 @@ class Customer(Base):
                      high_rating=review.star_rating
                      
            return review.restuarant.name
+ 
+      #add review for a restuarant
+     #  def add_review(self,restuarant_name,rating):
+     #       #creating the new review
+     #       new_review=Review(
+     #            customer=self,
+     #            restuarant=restuarant_name,
+     #            star_rating=rating
+     #       )
+     #       self.reviews.append(new_review)
+
+     #       session.add(new_review)
+     #       session.commit()
+
+     #       return new_review
 
 
+      def delete_reviews(self,restuarant):
+           reviews_deleted=[]
+           pass
+      
       def __repr__(self):
         return f"Customer {self.customer_id}: " \
             + f"{self.first_name}, " \
@@ -90,7 +110,9 @@ class Review(Base):
        def get_restuarant(self):
             return self.restuarant # returns the restuarant instance
        
-       
+       #full review
+       def full_review(self):
+            return f"Review for {self.restuarant.name} by {self.customer.first_name}:{self.star_rating} stars "
        def __repr__(self):
             return f"Review {self.review_id}: " \
                 + f"Customer ID: {self.customer_id}, " \
