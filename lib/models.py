@@ -84,24 +84,32 @@ class Customer(Base):
            return favorite_restaurant_name
  
       #add review for a restuarant
-     #  def add_review(self,restuarant_name,rating):
-     #       #creating the new review
-     #       new_review=Review(
-     #            customer=self,
-     #            restuarant=restuarant_name,
-     #            star_rating=rating
-     #       )
-     #       self.reviews.append(new_review)
+      def add_review(self,restuarant_name,rating):
+           #creating the new review
+           new_review=Review(
+                customer=self,
+                restuarant=restuarant_name,
+                star_rating=rating
+           )
+           self.reviews.append(new_review)
 
-     #       session.add(new_review)
-     #       session.commit()
+           session.add(new_review)
+           session.commit()
 
-     #       return new_review
+           return new_review
 
 
       def delete_reviews(self,restuarant):
-           reviews_deleted=[]
-           pass
+           deleted_reviews=[]
+           for review in self.reviews:
+                if review.restuarant == restuarant:
+                     deleted_reviews.append(review)
+
+           for review in deleted_reviews:
+                self.reviews.remove(review)
+           session.commit()
+                
+           
       
       def __repr__(self):
         return f"Customer {self.customer_id}: " \
