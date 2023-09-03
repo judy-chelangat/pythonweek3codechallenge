@@ -112,14 +112,6 @@ print(full_name)
 print("-------------------customer's favourite restuarant-------------")
 print(customer1.favourite_restuarant())
 
-# # 6 adding a review of a restuarant
-# customer2 = session.query(Customer) 
-# restaurant2 = session.query(Restuarant)  
-# rating=5 #setting the rating 
-# new_review=Customer.add_review(restaurant2,rating)
-
-# print("---------------------added review---------------")
-# print(new_review)
 
 #7 deleting reviews
 #8 full review 
@@ -141,5 +133,14 @@ reviews_list=restuarant_reviews.all_reviews()
 print("-------------all reviews----------")
 for one_review in reviews_list:
     print(one_review)
+
+# # 6 adding a review of a restuarant
+# customer2 = session.query(Customer).first()
+# restuarant2 = session.query(Restuarant).first()  
+# rating=5 #setting the rating 
+# new_review=customer2.add_review(restuarant2,rating)
+
+# print("---------------------added review---------------")
+# print(new_review)
 #closing the session
 session.close()
